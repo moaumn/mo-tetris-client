@@ -9,6 +9,8 @@ export class Box {
   x: number = 0;
   y: number = 0;
   shape: number[][] = [[]];
+  typeIndex: number = 0;
+  directionIndex: number = 0;
 
   // 旋转
   _rotateStrategy: Function[] = [];
@@ -60,11 +62,12 @@ export class Box {
     this.rightPoints = rightPoints;
     this.bottomPoints = bottomPoints;
   }
+
   // 边界点
   leftPoints: Coordinate[] = [];
   rightPoints: Coordinate[] = [];
   bottomPoints: Coordinate[] = [];
-  getBoundaryPoints() {
+  computeBoundaryPoints() {
     this.leftPoints = getLeftPoints(this.shape);
     this.rightPoints = getRightPoints(this.shape);
     this.bottomPoints = getBottomPoints(this.shape);
@@ -130,20 +133,25 @@ export const boxType = [
   },
 ];
 
-export function createRandomBox(): Box {
+export function createRandomBox(
+  destineType?: number,
+  destineDirection?: number
+) {
   const box = new Box();
-  const typeIndex = Math.trunc(Math.random() * 7);
+  const typeIndex = destineType ?? Math.trunc(Math.random() * 7);
   const type = boxType[typeIndex];
-  const directionIndex = Math.trunc(Math.random() * 4);
+  const directionIndex = destineDirection ?? Math.trunc(Math.random() * 4);
   const directionStrategy = [
     rotate90,
     rotate180,
     rotate270,
-    (shape: number[][]) => shape,
+    (matrix: number[][]) => JSON.parse(JSON.stringify(matrix)),
   ];
   box.shape = directionStrategy[directionIndex](type.shape);
+  box.typeIndex = typeIndex;
+  box.directionIndex = directionIndex;
   box.setRotateStrategy(type.rotateStrategy);
-  box.getBoundaryPoints();
+  box.computeBoundaryPoints();
   return box;
 }
 

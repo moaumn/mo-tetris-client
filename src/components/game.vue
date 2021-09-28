@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import Map from "./map.vue";
-import { createGame, GameState, initMap } from "../game";
-import { reactive, watch } from "vue";
+import { createGame, GameMode, initMap } from "../game";
+import { inject, reactive, watch } from "vue";
 import { render } from "../game/renderer";
 import config from "../common/config";
-import { MySelf } from "../common/player";
+import { MySelf, PlayerState } from "../common/player";
 
-const game = createGame(config);
-const { map, score, state, startGame, nextBox } = game;
+const game = createGame(Object.assign({}, config, { passive: false }));
+const { map, score, nextBox } = game;
 
 const player = new MySelf(game);
-game.startGame();
+const { state } = player;
+
 // next
 const nextMapLength = 6;
 const nextMap = reactive(initMap(nextMapLength, nextMapLength));
@@ -23,17 +24,7 @@ watch(nextBox, (value) => {
   }
 });
 
-function ready() {
-  // state.value = GameState.readied;
-}
-
-function pauseGame() {
-  state.value = GameState.paused;
-}
-
-function continueGame() {
-  state.value = GameState.started;
-}
+const rivalEnterRoomState = inject("rivalEnterRoomState");
 </script>
 
 <template>
@@ -46,32 +37,42 @@ function continueGame() {
       <div class="game__score">分数：{{ score }}</div>
       <div class="game__control-buttons">
         <button
-          v-if="state === GameState.unStarted || state === GameState.ended"
-          @click="startGame()"
+          v-if="
+            [
+              PlayerState.lost,
+              PlayerState.win,
+              PlayerState.ended,
+              PlayerState.unStarted,
+            ].indexOf(state) > -1
+          "
+          @click="
+            player.start(
+              rivalEnterRoomState ? GameMode.multiple : GameMode.single
+            )
+          "
         >
-          {{ state === GameState.ended ? "重新" : "" }}开始
+          开始
         </button>
         <button
-          v-if="state === GameState.unStarted || state === GameState.ended"
-          @click="ready()"
+          v-if="rivalEnterRoomState && state !== PlayerState.started"
+          @click="player.ready"
         >
           准备
         </button>
-        <button v-if="state === GameState.started" @click="pauseGame">
+        <button
+          v-if="game.mode === GameMode.single && state === PlayerState.started"
+          @click="player.pause"
+        >
           暂停
         </button>
-        <button v-if="state === GameState.paused" @click="continueGame">
+        <button
+          v-if="state === PlayerState.paused"
+          @click="player.continueGame"
+        >
           继续
         </button>
       </div>
-      <div v-if="state === GameState.started" class="game__buttons">
-        <div>
-          <button
-            class="game__button rotate"
-            @click="player.handleRotate"
-          ></button>
-          <button class="game__button" @click="player.handleMoveDown"></button>
-        </div>
+      <div v-if="state === PlayerState.started" class="game__buttons">
         <div>
           <button
             class="game__button left"
@@ -81,6 +82,13 @@ function continueGame() {
             class="game__button right"
             @click="player.handleMoveRight"
           ></button>
+        </div>
+        <div>
+          <button
+            class="game__button rotate"
+            @click="player.handleRotate"
+          ></button>
+          <button class="game__button" @click="player.handleMoveDown"></button>
         </div>
         <button
           class="game__button next"
