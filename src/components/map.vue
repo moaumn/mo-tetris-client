@@ -6,7 +6,7 @@ defineProps({
   },
   size: {
     type: Number,
-    default: 20,
+    default: 18,
   },
 });
 </script>
@@ -34,5 +34,6 @@ defineProps({
 .map__col {
   background-color: lightblue;
   margin: 0.5px;
+  border-radius: 2px;
 }
 </style>

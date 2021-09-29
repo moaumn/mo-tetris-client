@@ -80,26 +80,29 @@ export function createGame(options: any) {
     nextBox: ref(null),
 
     startGame(mode: GameMode) {
-      // 清理数据
-      game.score.value = 0;
-      cleanMap(game.map);
+      if (game.state !== GameState.started) {
+        // 清理数据
+        game.score.value = 0;
+        cleanMap(game.map);
 
-      // 设置模式状态
-      game.mode = mode;
-      game.state = GameState.started;
+        // 设置模式状态
+        game.mode = mode;
+        game.state = GameState.started;
 
-      // 被动模式不自动下落和创建box
-      if (!game.passive) {
-        createBox(game);
-        addTicker((n: number) => {
-          if (game.state === GameState.started) {
-            if (game.interval(n)) {
-              game.onTicker?.();
-              moveDown(game);
+        // 被动模式不自动下落和创建box
+        if (!game.passive) {
+          createBox(game);
+          addTicker((n: number) => {
+            if (game.state === GameState.started) {
+              if (game.interval(n)) {
+                game.onTicker?.();
+                moveDown(game);
+              }
             }
-          }
-        });
-        startTicker();
+          });
+          // todo 多次requestAnimationFrame可能会重复运行，待优化
+          startTicker();
+        }
       }
     },
     endGame() {
@@ -113,6 +116,7 @@ export function createGame(options: any) {
     },
     rotateBox() {
       game.activeBox!.rotate(game.map);
+      render(game.map, game.activeBox!);
     },
     moveDown() {
       moveDown(game);

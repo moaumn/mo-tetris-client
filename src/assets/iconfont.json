@@ -1,0 +1,107 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "14929715",
+      "name": "验证成功Validation (2)",
+      "font_class": "yanzhengchenggongValidation2",
+      "unicode": "e67d",
+      "unicode_decimal": 59005
+    },
+    {
+      "icon_id": "14929836",
+      "name": "上下左右Triangle1 (5)",
+      "font_class": "shangxiazuoyouTriangle15",
+      "unicode": "e692",
+      "unicode_decimal": 59026
+    },
+    {
+      "icon_id": "14929837",
+      "name": "上下左右Triangle1 (7)",
+      "font_class": "shangxiazuoyouTriangle17",
+      "unicode": "e693",
+      "unicode_decimal": 59027
+    },
+    {
+      "icon_id": "14929838",
+      "name": "上下左右Triangle1 (6)",
+      "font_class": "shangxiazuoyouTriangle16",
+      "unicode": "e694",
+      "unicode_decimal": 59028
+    },
+    {
+      "icon_id": "14929840",
+      "name": "上下左右Triangle1 (8)",
+      "font_class": "shangxiazuoyouTriangle18",
+      "unicode": "e695",
+      "unicode_decimal": 59029
+    },
+    {
+      "icon_id": "14929902",
+      "name": "多媒体控件Multimedia Controls (6)",
+      "font_class": "duomeitikongjianMultimediaControls6",
+      "unicode": "e6a3",
+      "unicode_decimal": 59043
+    },
+    {
+      "icon_id": "14929903",
+      "name": "多媒体控件Multimedia Controls (4)",
+      "font_class": "duomeitikongjianMultimediaControls4",
+      "unicode": "e6a4",
+      "unicode_decimal": 59044
+    },
+    {
+      "icon_id": "14929904",
+      "name": "多媒体控件Multimedia Controls (7)",
+      "font_class": "duomeitikongjianMultimediaControls7",
+      "unicode": "e6a5",
+      "unicode_decimal": 59045
+    },
+    {
+      "icon_id": "14929948",
+      "name": "联系人 (13)",
+      "font_class": "lianxiren13",
+      "unicode": "e6b0",
+      "unicode_decimal": 59056
+    },
+    {
+      "icon_id": "14929950",
+      "name": "联系人 (14)",
+      "font_class": "lianxiren14",
+      "unicode": "e6b1",
+      "unicode_decimal": 59057
+    },
+    {
+      "icon_id": "14929978",
+      "name": "评分等级Rating (8)",
+      "font_class": "pingfendengjiRating8",
+      "unicode": "e6b9",
+      "unicode_decimal": 59065
+    },
+    {
+      "icon_id": "14930021",
+      "name": "导航 (2)",
+      "font_class": "daohang2",
+      "unicode": "e6be",
+      "unicode_decimal": 59070
+    },
+    {
+      "icon_id": "14930218",
+      "name": "Sharing无线蓝牙共享 (2)",
+      "font_class": "Sharingwuxianlanyagongxiang2",
+      "unicode": "e6f0",
+      "unicode_decimal": 59120
+    },
+    {
+      "icon_id": "14930242",
+      "name": "Sound声音 (10)",
+      "font_class": "Soundshengyin10",
+      "unicode": "e6f5",
+      "unicode_decimal": 59125
+    }
+  ]
+}

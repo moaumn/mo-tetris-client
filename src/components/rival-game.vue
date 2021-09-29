@@ -1,38 +1,40 @@
 <script setup lang="ts">
 import Map from "./map.vue";
-import { inject } from "vue";
-import { createGame } from "../game";
-import config from "../common/config";
-import { Rival } from "../common/player";
+import { Game } from "../game";
+import { Player } from "../common/player";
 
-const game = createGame(Object.assign({}, config, { passive: true }));
-const { map, score } = game;
-const rival = new Rival(game);
-
-const enterRoomState = inject("enterRoomState");
-const connectState = inject("connectState");
-const rivalEnterRoomState = inject("rivalEnterRoomState");
+const props = defineProps<{
+  game: Game;
+  rival: Player;
+}>();
+const { map, score } = props.game;
+const { onlineState } = props.rival;
 </script>
 
 <template>
-  <div class="coordinator-game">
-    <div class="coordinator-game__side">
-      <div>{{ connectState ? "已连接" : "未连接" }}</div>
-      <div>{{ enterRoomState ? "进入房间" : "未进入房间" }}</div>
-      <div>{{ rivalEnterRoomState ? "朋友在线" : "朋友离线" }}</div>
-      <div>{{ score }}</div>
+  <div class="rival-game">
+    <div class="rival-game__side">
+      <slot name="head"></slot>
+      <div v-if="onlineState" class="rival-game__score">分数：{{ score }}</div>
+      <slot name="bottom"></slot>
     </div>
     <Map :map="map"></Map>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.coordinator-game {
+.rival-game {
   display: flex;
 
+  &__score {
+    padding: 10px 0;
+    text-align: center;
+  }
+
   &__side {
-    width: 100px;
-    background: lightcoral;
+    padding: 10px 10px 10px 10px;
+    width: 120px;
+    background: lightseagreen;
   }
 }
 </style>
