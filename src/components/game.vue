@@ -35,7 +35,7 @@ watch(nextBox, (value) => {
     <Map :map="map"> </Map>
     <div class="game__side">
       <div class="game__next-box">
-        <Map :map="nextMap" :size="10"></Map>
+        <Map :map="nextMap" :size="0.1"></Map>
       </div>
       <div class="game__score">分数：{{ score }}</div>
       <div v-if="state === PlayerState.started" class="game__buttons">
@@ -74,14 +74,14 @@ watch(nextBox, (value) => {
 }
 .game__score {
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 0.15rem;
 }
 .game__side {
-  width: 120px;
+  width: 1.2rem;
   background: lightcoral;
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 0.15rem;
 }
 .game__buttons {
   justify-self: flex-end;
@@ -98,12 +98,12 @@ watch(nextBox, (value) => {
   }
 }
 .game__button {
-  font-size: 40px;
+  font-size: 0.4rem;
 }
 .game__next-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 0.15rem;
 }
 </style>

@@ -6,7 +6,7 @@ defineProps({
   },
   size: {
     type: Number,
-    default: 18,
+    default: 0.18,
   },
 });
 </script>
@@ -19,8 +19,8 @@ defineProps({
         v-for="num in row"
         :style="{
           backgroundColor: num === 0 ? 'lightblue' : 'orange',
-          width: size + 'px',
-          height: size + 'px',
+          width: size + 'rem',
+          height: size + 'rem',
         }"
       ></div>
     </div>

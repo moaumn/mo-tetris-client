@@ -27,13 +27,13 @@ const { onlineState } = props.rival;
   display: flex;
 
   &__score {
-    padding: 10px 0;
+    padding: 0.1rem 0;
     text-align: center;
   }
 
   &__side {
-    padding: 10px 10px 10px 10px;
-    width: 120px;
+    padding: 0.1rem 0.1rem 0.1rem 0.1rem;
+    width: 1.2rem;
     background: lightseagreen;
   }
 }
