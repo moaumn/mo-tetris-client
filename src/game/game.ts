@@ -89,7 +89,13 @@ export function createGame(options: any) {
     interval: intervalTimer(options.interval),
     activeBox: null,
     nextBox: ref(null),
-    props: ref([]),
+    props: ref([
+      PropType.FILL,
+      PropType.SPEED_UP,
+      PropType.SPEED_DOWN,
+      PropType.GET_STRIP,
+      PropType.DISABLE_ROTATE,
+    ]),
     on: observer.on.bind(observer),
     off: observer.off.bind(observer),
     dispatch: observer.dispatch.bind(observer),
@@ -279,7 +285,7 @@ export function setScore(rows: number, game: Game, useProp = false) {
 
 export function rewardProp(rows: number, game: Game) {
   if (rows === 0 || game.props.value.length >= 6) return;
-  const rate = { 1: 1, 2: 3, 3: 6, 4: 10 };
+  const rate = { 1: 3, 2: 5, 3: 8, 4: 10 };
   const random = Math.random() * 10;
   // @ts-ignore
   if (random < rate[rows]) {
