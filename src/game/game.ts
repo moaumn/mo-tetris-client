@@ -103,7 +103,7 @@ export function createGame(options: any) {
       if (game.state !== GameState.started) {
         // 清理数据
         game.score.value = 0;
-        game.props.value = [];
+        //game.props.value = [];
         cleanMap(game.map);
 
         // 设置模式状态
