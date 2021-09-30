@@ -80,10 +80,10 @@ watch(nextBox, (value) => {
 }
 .game__side {
   width: 1.2rem;
-  background: lightcoral;
   display: flex;
   flex-direction: column;
-  padding: 0.15rem;
+  padding-left: 0.1rem;
+  color: #fff;
 }
 .game__buttons {
   justify-self: flex-end;

@@ -33,9 +33,8 @@ const { onlineState } = props.rival;
   }
 
   &__side {
-    padding: 0.1rem 0.1rem 0.1rem 0.1rem;
+    padding-right: 0.1rem;
     width: 1.2rem;
-    background: lightseagreen;
   }
 }
 </style>

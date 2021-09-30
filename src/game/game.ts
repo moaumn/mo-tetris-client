@@ -89,13 +89,7 @@ export function createGame(options: any) {
     interval: intervalTimer(options.interval),
     activeBox: null,
     nextBox: ref(null),
-    props: ref([
-      PropType.FILL,
-      PropType.SPEED_UP,
-      PropType.SPEED_DOWN,
-      PropType.GET_STRIP,
-      PropType.DISABLE_ROTATE,
-    ]),
+    props: ref([]),
     on: observer.on.bind(observer),
     off: observer.off.bind(observer),
     dispatch: observer.dispatch.bind(observer),
@@ -103,7 +97,7 @@ export function createGame(options: any) {
       if (game.state !== GameState.started) {
         // 清理数据
         game.score.value = 0;
-        //game.props.value = [];
+        game.props.value = [];
         cleanMap(game.map);
 
         // 设置模式状态
@@ -285,7 +279,7 @@ export function setScore(rows: number, game: Game, useProp = false) {
 
 export function rewardProp(rows: number, game: Game) {
   if (rows === 0 || game.props.value.length >= 6) return;
-  const rate = { 1: 3, 2: 5, 3: 8, 4: 10 };
+  const rate = { 1: 1, 2: 3, 3: 6, 4: 10 };
   const random = Math.random() * 10;
   // @ts-ignore
   if (random < rate[rows]) {
@@ -293,7 +287,7 @@ export function rewardProp(rows: number, game: Game) {
       const propIndex = Math.trunc(Math.random() * buffProps.length);
       game.props.value.push(buffProps[propIndex]);
     } else {
-      const propIndex = Math.random() * props.length;
+      const propIndex = Math.trunc(Math.random() * props.length);
       game.props.value.push(props[propIndex]);
     }
   }

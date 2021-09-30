@@ -142,7 +142,7 @@ const releaseProp = (propType: PropType, index: number) => {
               {{ state === PlayerState.readied ? "已" : "" }}准备
             </button>
           </div>
-          <div class="game__props">
+          <div class="game__props" v-if="state === PlayerState.started">
             <div
               class="game__prop"
               v-for="(prop, index) in gameProps"
@@ -173,20 +173,22 @@ const releaseProp = (propType: PropType, index: number) => {
 .game__wrap {
   display: flex;
   height: 100%;
+  background: url("./assets/bg.jpg");
+  background-size: 100% 100%;
 }
 .game__rival-wrap {
-  background: lightseagreen;
   flex: 1 0 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0.1rem;
 }
 .game__self-wrap {
-  background: lightcoral;
   flex: 1 0 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0.15rem;
 }
 .game__icon-bar {
   display: flex;
@@ -225,7 +227,10 @@ const releaseProp = (propType: PropType, index: number) => {
   flex-direction: column;
   align-items: center;
   margin-top: 0.15rem;
+
   button {
+    font-size: 0.14rem;
+    margin-bottom: 0.05rem;
     padding: 0.05rem;
     width: 100%;
     border-radius: 0.2rem;
@@ -239,12 +244,17 @@ const releaseProp = (propType: PropType, index: number) => {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 15px 0;
+  padding: 0.15rem 0;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 0.1rem;
+
+  .game__prop {
+    border: 0.01rem solid #000000;
+    border-radius: 0.05rem;
+  }
 
   .iconfont {
-    font-size: 35px;
+    font-size: 0.35rem;
   }
   .down {
     transform: rotateZ(180deg);

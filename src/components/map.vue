@@ -14,7 +14,7 @@ withDefaults(
 const getColor = (mapState: MapState) => {
   switch (mapState) {
     case MapState.EMPTY:
-      return "lightblue";
+      return "rgba(173,216,230,.2)";
     case MapState.NORMAL_BOX:
       return "orange";
     case MapState.DISABLE_ROTATE_BOX:
