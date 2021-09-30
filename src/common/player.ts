@@ -1,4 +1,4 @@
-import { Game, GameMode, GameState } from "../game";
+import { buffProps, Game, GameMode, PropType } from "../game";
 import { message } from "./message";
 import { Ref, ref } from "vue";
 import { information } from "./utils";
@@ -51,67 +51,88 @@ export class Player {
   handleFallDown() {
     this.game.fallDown();
   }
+  releaseProp(propType: PropType, index?: number) {
+    this.game.releaseProps(propType, index);
+  }
 }
 
 export class MySelf extends Player {
   constructor(game: Game, onEnd: () => void) {
     super(game);
-    this.game.onTicker = () => {
-      this.emit("game", "moveDown");
-    };
-    this.game.onCreateBox = (...args) => {
-      this.emit("game", "createBox", ...args);
-    };
-    this.game.onEnd = () => {
+    this.game.on("ticker", () => {
+      this.emit("rivalGame", "moveDown");
+    });
+    this.game.on("createBox", (...args: any[]) => {
+      this.emit("rivalGame", "createBox", ...args);
+    });
+    this.game.on("end", () => {
       this.emit("game", "end", this.game.score);
+      this.emit("rivalGame", "end");
       this.state.value = PlayerState.ended;
       onEnd();
-    };
+    });
+
     message.on("game", (msg: string, ...args: any[]) => {
       switch (msg) {
         case "start":
           super.start(GameMode.multiple);
           break;
+        case "releaseProp":
+          // @ts-ignore
+          super.releaseProp(...args);
+          break;
         case "end":
           this.endGame();
           onEnd();
+          break;
       }
     });
   }
 
   start(model: GameMode) {
     message.emit("game", "start");
+    message.emit("rivalGame", "start");
     super.start(model);
   }
 
   ready() {
     message.emit("game", "ready");
+    message.emit("rivalGame", "ready");
     super.ready();
   }
 
   handleMoveLeft() {
-    this.emit("game", "moveLeft");
+    this.emit("rivalGame", "moveLeft");
     super.handleMoveLeft();
   }
 
   handleMoveDown() {
-    this.emit("game", "moveDown");
+    this.emit("rivalGame", "moveDown");
     super.handleMoveDown();
   }
 
   handleMoveRight() {
-    this.emit("game", "moveRight");
+    this.emit("rivalGame", "moveRight");
     super.handleMoveRight();
   }
 
   handleRotate() {
-    this.emit("game", "rotateBox");
+    this.emit("rivalGame", "rotateBox");
     super.handleRotate();
   }
 
   handleFallDown() {
-    this.emit("game", "fallDown");
+    this.emit("rivalGame", "fallDown");
     super.handleFallDown();
+  }
+
+  releaseProp(propType: PropType, index: number) {
+    if (buffProps.indexOf(propType) > -1) {
+      super.releaseProp(propType, index);
+      this.emit("rivalGame", "releaseProp", propType);
+    } else {
+      this.emit("game", "releaseProp", propType);
+    }
   }
 
   emit(...args: any[]) {
@@ -136,7 +157,7 @@ export class Rival extends Player {
       information("朋友已下线");
     });
 
-    message.on("game", (msg: string, ...args: any[]) => {
+    message.on("rivalGame", (msg: string, ...args: any[]) => {
       switch (msg) {
         case "moveLeft":
           this.handleMoveLeft();
@@ -158,6 +179,10 @@ export class Rival extends Player {
           break;
         case "start":
           this.start(GameMode.multiple);
+          break;
+        case "releaseProp":
+          // @ts-ignore
+          this.releaseProp(...args);
           break;
         case "end":
           this.endGame();

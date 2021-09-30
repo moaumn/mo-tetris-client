@@ -1,13 +1,16 @@
 type Ticker = Function;
 const tickers: Array<Ticker> = [];
 let startTime = Date.now();
-
+let tickerStarted = false;
 export function addTicker(ticker: Ticker) {
   tickers.push(ticker);
 }
 
 export function startTicker() {
-  requestAnimationFrame(handleFrame);
+  if (!tickerStarted) {
+    tickerStarted = true;
+    requestAnimationFrame(handleFrame);
+  }
 }
 
 function handleFrame() {

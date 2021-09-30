@@ -6,7 +6,8 @@ import {
   rotate180,
   rotate270,
   Box,
-} from "../box";
+  MapState,
+} from "../index";
 
 test("should return bottom points", () => {
   const matrix1 = [
@@ -202,11 +203,46 @@ describe("should rotate box", () => {
 
   test("can rotate", () => {
     const map = [
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [2, 2, 0, 0, 0, 0],
-      [2, 2, 0, 0, 0, 0],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.FILLED,
+        MapState.FILLED,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.FILLED,
+        MapState.FILLED,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
     ];
     const box = createBox();
     box.shape = [
@@ -228,11 +264,46 @@ describe("should rotate box", () => {
 
   test("can rotate but need to move right", () => {
     const map = [
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [2, 2, 0, 0, 0, 0],
-      [2, 2, 0, 0, 0, 0],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.FILLED,
+        MapState.FILLED,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.FILLED,
+        MapState.FILLED,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
     ];
     const box = createBox();
     box.shape = [
@@ -254,11 +325,46 @@ describe("should rotate box", () => {
 
   test("can rotate but need to move left", () => {
     const map = [
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 2, 0, 0],
-      [0, 0, 0, 2, 0, 0],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.FILLED,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.FILLED,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
     ];
     const box = createBox();
     box.shape = [
@@ -280,11 +386,46 @@ describe("should rotate box", () => {
 
   test("no enough space on the left to rotate", () => {
     const map = [
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 2, 2, 0, 0],
-      [0, 0, 2, 2, 0, 0],
-      [0, 0, 2, 2, 0, 0],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.FILLED,
+        MapState.FILLED,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.FILLED,
+        MapState.FILLED,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.FILLED,
+        MapState.FILLED,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
     ];
     const box = createBox();
     box.shape = [
@@ -308,12 +449,54 @@ describe("should rotate box", () => {
 
   test("no enough space on the right to rotate", () => {
     const map = [
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 2, 2, 0, 0],
-      [0, 0, 2, 2, 0, 0],
-      [0, 0, 2, 2, 0, 0],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.FILLED,
+        MapState.FILLED,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.FILLED,
+        MapState.FILLED,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.FILLED,
+        MapState.FILLED,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
     ];
     const box = createBox();
     box.shape = [
@@ -335,12 +518,54 @@ describe("should rotate box", () => {
 
   test("no enough space on the bottom to rotate", () => {
     const map = [
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
+      [
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+        MapState.EMPTY,
+      ],
     ];
     const box = createBox();
     box.shape = [

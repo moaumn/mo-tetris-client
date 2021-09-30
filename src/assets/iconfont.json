@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1301",
+      "name": "应用",
+      "font_class": "yingyong",
+      "unicode": "f0174",
+      "unicode_decimal": 983412
+    },
+    {
+      "icon_id": "736505",
+      "name": "时间",
+      "font_class": "shijian",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "736511",
+      "name": "问号 (1)",
+      "font_class": "wenhao1",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "949770",
+      "name": "长条",
+      "font_class": "changtiao",
+      "unicode": "e667",
+      "unicode_decimal": 58983
+    },
+    {
       "icon_id": "14929715",
       "name": "验证成功Validation (2)",
       "font_class": "yanzhengchenggongValidation2",

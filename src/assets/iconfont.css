@@ -62,3 +62,19 @@
 .icon-sound:before {
   content: "\e6f5";
 }
+
+.icon-app:before {
+  content: "\f0174";
+}
+
+.icon-time:before {
+  content: "\e614";
+}
+
+.icon-help:before {
+  content: "\e61a";
+}
+
+.icon-strip:before {
+  content: "\e667";
+}

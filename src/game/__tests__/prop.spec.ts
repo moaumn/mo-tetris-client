@@ -1,0 +1,66 @@
+import { fillProp } from "../prop";
+import { MapState } from "../map";
+
+test("fill props", () => {
+  const map = [
+    [
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.FILLED,
+    ],
+    [
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.FILLED,
+    ],
+  ];
+  fillProp(map);
+  expect(map).toEqual([
+    [
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+    ],
+    [
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+    ],
+  ]);
+});

@@ -1,12 +1,36 @@
-import { addBoxToMap, removeFilledRow } from "../map";
+import { addBoxToMap, removeFilledRow, MapState } from "../map";
 import { Box } from "../box";
 
 test("should add box to map", () => {
   const map = [
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
+    [
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
   ];
   const box = new Box();
   box.y = 1;
@@ -17,16 +41,51 @@ test("should add box to map", () => {
   ];
 
   addBoxToMap(map, box);
-  expect([map[2][0], map[3][0], map[3][1], map[3][2]]).toEqual([2, 2, 2, 2]);
+  expect([map[2][0], map[3][0], map[3][1], map[3][2]]).toEqual([
+    MapState.FILLED,
+    MapState.FILLED,
+    MapState.FILLED,
+    MapState.FILLED,
+  ]);
 });
 
 test("should remove filled row", () => {
   const map = [
-    [2, 0, 0, 0, 0],
-    [2, 2, 2, 2, 2],
-    [0, 2, 0, 0, 2],
-    [2, 2, 2, 2, 2],
-    [0, 2, 0, 2, 2],
+    [
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.FILLED,
+    ],
+    [
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.FILLED,
+    ],
   ];
   const box = new Box();
   box.shape = [
@@ -39,10 +98,40 @@ test("should remove filled row", () => {
   box.y = 1;
   removeFilledRow(map, box);
   expect(map).toEqual([
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [2, 0, 0, 0, 0],
-    [0, 2, 0, 0, 2],
-    [0, 2, 0, 2, 2],
+    [
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.FILLED,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.FILLED,
+    ],
   ]);
 });

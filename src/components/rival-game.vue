@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import Map from "./map.vue";
 import { Game } from "../game";
-import { Player } from "../common/player";
+import { Player, Rival } from "../common/player";
 
 const props = defineProps<{
   game: Game;
-  rival: Player;
+  rival: Rival;
 }>();
 const { map, score } = props.game;
 const { onlineState } = props.rival;
@@ -16,6 +16,7 @@ const { onlineState } = props.rival;
     <div class="rival-game__side">
       <slot name="head"></slot>
       <div v-if="onlineState" class="rival-game__score">分数：{{ score }}</div>
+      <slot name="prop"></slot>
       <slot name="bottom"></slot>
     </div>
     <Map :map="map"></Map>

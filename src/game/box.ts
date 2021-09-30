@@ -11,6 +11,7 @@ export class Box {
   shape: number[][] = [[]];
   typeIndex: number = 0;
   directionIndex: number = 0;
+  canRotate: boolean = true;
 
   // 旋转
   _rotateStrategy: Function[] = [];
@@ -19,7 +20,7 @@ export class Box {
     this._rotateStrategy = rotateStrategy;
   }
   rotate(map: number[][]) {
-    if (this._rotateStrategy.length === 0) return;
+    if (!this.canRotate || this._rotateStrategy.length === 0) return;
     if (this._rotateIndex > this._rotateStrategy.length - 1) {
       this._rotateIndex = 0;
     }

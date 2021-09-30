@@ -1,5 +1,5 @@
 import { boxType, createGame, moveDown, moveLeft } from "../index";
-import { Box } from "../index";
+import { Box, MapState } from "../index";
 
 describe("boundary", () => {
   test("moveDown", () => {
@@ -10,7 +10,7 @@ describe("boundary", () => {
     });
     game.activeBox = new Box();
     game.activeBox.shape = boxType[2].shape;
-    game.activeBox.getBoundaryPoints();
+    game.activeBox.computeBoundaryPoints();
     moveDown(game);
     expect(game.activeBox!.y).toEqual(1);
     moveDown(game);
@@ -21,13 +21,41 @@ describe("boundary", () => {
     const leftLBox = new Box();
     leftLBox.shape = boxType[2].shape;
     leftLBox.x = 3;
-    leftLBox.getBoundaryPoints();
+    leftLBox.computeBoundaryPoints();
     const game = {
       map: [
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [2, 2, 0, 0, 0, 0],
-        [2, 2, 0, 0, 0, 0],
+        [
+          MapState.EMPTY,
+          MapState.EMPTY,
+          MapState.EMPTY,
+          MapState.EMPTY,
+          MapState.EMPTY,
+          MapState.EMPTY,
+        ],
+        [
+          MapState.EMPTY,
+          MapState.EMPTY,
+          MapState.EMPTY,
+          MapState.EMPTY,
+          MapState.EMPTY,
+          MapState.EMPTY,
+        ],
+        [
+          MapState.FILLED,
+          MapState.FILLED,
+          MapState.EMPTY,
+          MapState.EMPTY,
+          MapState.EMPTY,
+          MapState.EMPTY,
+        ],
+        [
+          MapState.FILLED,
+          MapState.FILLED,
+          MapState.EMPTY,
+          MapState.EMPTY,
+          MapState.EMPTY,
+          MapState.EMPTY,
+        ],
       ],
       activeBox: leftLBox,
     };

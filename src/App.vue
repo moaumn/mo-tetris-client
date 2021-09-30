@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import Game from "./components/game.vue";
 import RivalGame from "./components/rival-game.vue";
-import { createGame, GameMode } from "./game";
+import { createGame, GameMode, PropType, deBuffProps } from "./game";
 import config from "./common/config";
 import { MySelf, PlayerState, Rival } from "./common/player";
-import { inject, ref, watch } from "vue";
+import { inject, ref, watch, Ref } from "vue";
 import { information } from "./common/utils";
 
-const game: Game = createGame(Object.assign({ passive: false }, config));
-const rivalGame: Game = createGame(Object.assign({ passive: true }, config));
+const game = createGame(Object.assign({ passive: false }, config));
+const rivalGame = createGame(Object.assign({ passive: true }, config));
 
 const player = new MySelf(game, () => {
   if (game.mode === GameMode.multiple) {
@@ -24,15 +24,15 @@ const rival = new Rival(rivalGame);
 
 const { state: rivalState, onlineState: rivalOnlineState } = rival;
 const { state } = player;
+const { props: gameProps } = game;
 
 // 连接断开后，修改对手状态
-watch(inject("connectState"), (value) => {
+const connectState: any = inject("connectState");
+watch(connectState, (value) => {
   if (!value) {
-    rival.onlineState = false;
+    rival.onlineState.value = false;
   }
 });
-
-const connectState = inject("connectState");
 
 const gameMode = ref(GameMode.single);
 const onGameModeChange = (mode: GameMode) => {
@@ -40,6 +40,13 @@ const onGameModeChange = (mode: GameMode) => {
     return information("游戏运行中不可以切换模式");
   }
   gameMode.value = mode;
+};
+
+const releaseProp = (propType: PropType, index: number) => {
+  player.releaseProp(propType, index);
+  if (deBuffProps.indexOf(propType) > -1) {
+    rival.releaseProp(propType);
+  }
 };
 </script>
 
@@ -84,7 +91,6 @@ const onGameModeChange = (mode: GameMode) => {
               双人
             </div>
           </div>
-
           <div
             v-if="gameMode === GameMode.single"
             class="game__control-buttons"
@@ -113,7 +119,6 @@ const onGameModeChange = (mode: GameMode) => {
               结束
             </button>
           </div>
-
           <div
             v-if="gameMode === GameMode.multiple"
             class="game__control-buttons"
@@ -136,6 +141,24 @@ const onGameModeChange = (mode: GameMode) => {
             >
               {{ state === PlayerState.readied ? "已" : "" }}准备
             </button>
+          </div>
+          <div class="game__props">
+            <div
+              class="game__prop"
+              v-for="(prop, index) in gameProps"
+              @click="releaseProp(prop, index)"
+            >
+              <div
+                class="iconfont"
+                :class="{
+                  'icon-app icon-true': prop === PropType.FILL,
+                  'icon-strip icon-true': prop === PropType.GET_STRIP,
+                  'icon-time icon-true': prop === PropType.SPEED_DOWN,
+                  'icon-time icon-false down': prop === PropType.SPEED_UP,
+                  'icon-invite icon-false': prop === PropType.DISABLE_ROTATE,
+                }"
+              ></div>
+            </div>
           </div>
         </template>
       </RivalGame>
@@ -208,6 +231,22 @@ const onGameModeChange = (mode: GameMode) => {
     border: 1px lightblue solid;
     background: #fff;
     outline: none;
+  }
+}
+
+.game__props {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 0;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .iconfont {
+    font-size: 35px;
+  }
+  .down {
+    transform: rotateZ(180deg);
   }
 }
 </style>
