@@ -200,8 +200,9 @@ const releaseProp = (propType: PropType, index: number) => {
   border-radius: 0.2rem;
   display: flex;
   cursor: pointer;
+  margin-top: 0.15rem;
   > div {
-    padding: 0.05rem;
+    padding: 0.06rem;
     text-align: center;
     flex: 1 0 0;
   }

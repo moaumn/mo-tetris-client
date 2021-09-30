@@ -67,7 +67,8 @@ export type Game = {
   ) => void;
 
   // 游戏道具
-  releaseProps: (propType: PropType, index?: number) => void;
+  releaseProp: (propType: PropType, index?: number) => void;
+  removeProp: (index: number) => void;
 
   // 事件用于同步对手界面
   on: (event: string, callback: Function) => void;
@@ -102,6 +103,7 @@ export function createGame(options: any) {
       if (game.state !== GameState.started) {
         // 清理数据
         game.score.value = 0;
+        game.props.value = [];
         cleanMap(game.map);
 
         // 设置模式状态
@@ -151,11 +153,14 @@ export function createGame(options: any) {
     createBox(...args: number[]) {
       createBox(game, ...args);
     },
-    releaseProps(propType: PropType, index?: number) {
+    releaseProp(propType: PropType, index?: number) {
       props[propType]();
       if (typeof index !== "undefined") {
         game.props.value.splice(index, 1);
       }
+    },
+    removeProp(index: number) {
+      game.props.value.splice(index, 1);
     },
   };
 

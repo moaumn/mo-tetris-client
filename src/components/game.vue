@@ -41,6 +41,12 @@ watch(nextBox, (value) => {
       <div v-if="state === PlayerState.started" class="game__buttons">
         <div>
           <div
+            class="iconfont icon-up game__button"
+            @click="props.player.handleRotate"
+          ></div>
+        </div>
+        <div>
+          <div
             class="iconfont icon-left game__button"
             @click="props.player.handleMoveLeft"
           ></div>
@@ -50,10 +56,6 @@ watch(nextBox, (value) => {
           ></div>
         </div>
         <div>
-          <div
-            class="iconfont icon-up game__button"
-            @click="props.player.handleRotate"
-          ></div>
           <div
             class="iconfont icon-down game__button"
             @click="props.player.handleMoveDown"
@@ -98,7 +100,7 @@ watch(nextBox, (value) => {
   }
 }
 .game__button {
-  font-size: 0.4rem;
+  font-size: 0.55rem;
 }
 .game__next-box {
   display: flex;

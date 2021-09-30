@@ -52,7 +52,7 @@ export class Player {
     this.game.fallDown();
   }
   releaseProp(propType: PropType, index?: number) {
-    this.game.releaseProps(propType, index);
+    this.game.releaseProp(propType, index);
   }
 }
 
@@ -131,6 +131,7 @@ export class MySelf extends Player {
       super.releaseProp(propType, index);
       this.emit("rivalGame", "releaseProp", propType);
     } else {
+      this.game.removeProp(index);
       this.emit("game", "releaseProp", propType);
     }
   }
