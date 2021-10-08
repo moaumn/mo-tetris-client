@@ -33,6 +33,22 @@ initMessage(
   }
 );
 
+function rotateWindow() {
+  let { clientWidth: width, clientHeight: height } = document.body;
+
+  if (width < height) {
+    const html = document.querySelector("html");
+    html!.style.transform = `rotateZ(90deg) translate(${
+      (height - width) / 2
+    }px, ${(height - width) / 2}px)`;
+    html!.style.fontSize = (height / 736) * 100 + "px";
+    html!.style.width = height + "px";
+    html!.style.height = width + "px";
+  }
+}
+rotateWindow();
+window.addEventListener("resize", rotateWindow);
+
 const app = createApp(App);
 app.provide("connectState", connectState);
 app.provide("enterRoomState", enterRoomState);
