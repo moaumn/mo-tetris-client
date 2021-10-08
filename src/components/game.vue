@@ -32,10 +32,10 @@ watch(nextBox, (value) => {
 
 <template>
   <div class="game">
-    <Map :map="map"> </Map>
+    <Map :map="map" :ice="false"> </Map>
     <div class="game__side">
       <div class="game__next-box">
-        <Map :map="nextMap" :size="0.1"></Map>
+        <Map :map="nextMap" :ice="false" :size="0.1"></Map>
       </div>
       <div class="game__score">分数：{{ score }}</div>
       <div v-if="state === PlayerState.started" class="game__buttons">

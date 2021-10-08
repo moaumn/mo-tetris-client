@@ -1,26 +1,31 @@
 <script lang="ts" setup>
 import { MapState } from "../game";
+import ice from "../assets/ice.png";
+import fire from "../assets/fire.png";
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     map: number[][];
+    ice?: boolean;
     size?: number;
   }>(),
   {
     size: 0.18,
+    ice: true,
   }
 );
 
-const getColor = (mapState: MapState) => {
+const bg = props.ice ? ice : fire;
+const getBackground = (mapState: MapState) => {
   switch (mapState) {
     case MapState.EMPTY:
       return "rgba(173,216,230,.2)";
     case MapState.NORMAL_BOX:
-      return "orange";
+      return `url(${bg}) center/100% `;
     case MapState.DISABLE_ROTATE_BOX:
       return "grey";
     case MapState.FILLED:
-      return "green";
+      return `url(${bg}) center/100%`;
   }
 };
 </script>
@@ -32,7 +37,7 @@ const getColor = (mapState: MapState) => {
         class="map__col"
         v-for="state in row"
         :style="{
-          backgroundColor: getColor(state),
+          background: getBackground(state),
           width: size + 'rem',
           height: size + 'rem',
         }"
