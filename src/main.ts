@@ -33,9 +33,10 @@ initMessage(
   }
 );
 
+const html = document.querySelector("html");
+//const app = document.querySelector("#app");
 function rotateWindow() {
   let { clientWidth: width, clientHeight: height } = document.body;
-  const html = document.querySelector("html");
 
   if (width < height) {
     html!.style.transform = `rotateZ(90deg) translate(${
@@ -47,8 +48,8 @@ function rotateWindow() {
   } else {
     html!.style.transform = "none";
     html!.style.fontSize = (width / 736) * 100 + "px";
-    html!.style.width = width + "px";
-    html!.style.height = height + "px";
+    html!.style.width = "100%";
+    html!.style.height = "100%";
   }
 }
 rotateWindow();
