@@ -35,15 +35,20 @@ initMessage(
 
 function rotateWindow() {
   let { clientWidth: width, clientHeight: height } = document.body;
+  const html = document.querySelector("html");
 
   if (width < height) {
-    const html = document.querySelector("html");
     html!.style.transform = `rotateZ(90deg) translate(${
       (height - width) / 2
     }px, ${(height - width) / 2}px)`;
     html!.style.fontSize = (height / 736) * 100 + "px";
     html!.style.width = height + "px";
     html!.style.height = width + "px";
+  } else {
+    html!.style.transform = "none";
+    html!.style.fontSize = (width / 736) * 100 + "px";
+    html!.style.width = width + "px";
+    html!.style.height = height + "px";
   }
 }
 rotateWindow();
