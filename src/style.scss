@@ -7,6 +7,15 @@ html{
     height: 100%;
     font-size: calc(100vw/736 *  100);
 }
+@media screen and (max-width: 500px) {
+    html{
+        font-size: calc(100vh/736 * 100);
+        transform: rotateZ(90deg) translate(calc((100vh - 100vw)/2), calc((100vh - 100vw)/2));
+        width: 100vh;
+        height: 100vw;
+    }
+}
+
 body{
     margin: 0;
     height: 100%;

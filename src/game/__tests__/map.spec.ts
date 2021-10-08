@@ -49,7 +49,7 @@ test("should add box to map", () => {
   ]);
 });
 
-test("should remove filled row", () => {
+test("should remove filled rows according to box", () => {
   const map = [
     [
       MapState.FILLED,
@@ -96,7 +96,7 @@ test("should remove filled row", () => {
   ];
   box.x = 3;
   box.y = 1;
-  removeFilledRow(map, box);
+  const rows = removeFilledRow(map, box);
   expect(map).toEqual([
     [
       MapState.EMPTY,
@@ -134,4 +134,84 @@ test("should remove filled row", () => {
       MapState.FILLED,
     ],
   ]);
+  expect(rows).toEqual(2);
+});
+
+test("should remove filled rows from the bottom according to destined number", () => {
+  const map = [
+    [
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.FILLED,
+    ],
+    [
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+    ],
+    [
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+      MapState.FILLED,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.FILLED,
+    ],
+  ];
+  const rows = removeFilledRow(map, 3);
+  expect(map).toEqual([
+    [
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.EMPTY,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.EMPTY,
+      MapState.FILLED,
+    ],
+    [
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.EMPTY,
+      MapState.FILLED,
+      MapState.FILLED,
+    ],
+  ]);
+  expect(rows).toEqual(2);
 });

@@ -13,7 +13,7 @@ const rivalGame = createGame(Object.assign({ passive: true }, config));
 const player = new MySelf(game, () => {
   if (game.mode === GameMode.multiple) {
     rival.endGame();
-    if (game.score >= rivalGame.score) {
+    if (game.score.value >= rivalGame.score.value) {
       alert("You Win");
     } else {
       alert("You Lose");
@@ -40,6 +40,14 @@ const onGameModeChange = (mode: GameMode) => {
     return information("游戏运行中不可以切换模式");
   }
   gameMode.value = mode;
+};
+
+const roomId = inject("roomId") as Ref<string>;
+const invite = () => {
+  const url = new URL(location.href);
+  url.searchParams.set("roomId", roomId.value);
+  navigator.clipboard.writeText(url.href);
+  information("邀请链接复制成功，发送给好友即可开始对战");
 };
 
 const releaseProp = (propType: PropType, index: number) => {
@@ -123,6 +131,7 @@ const releaseProp = (propType: PropType, index: number) => {
             v-if="gameMode === GameMode.multiple"
             class="game__control-buttons"
           >
+            <button v-if="!rivalOnlineState" @click="invite">邀请</button>
             <button
               v-if="rivalState === PlayerState.readied"
               @click="
@@ -218,7 +227,7 @@ const releaseProp = (propType: PropType, index: number) => {
     border-bottom-right-radius: 0.2rem;
   }
   .game__mode-item--selected {
-    background: blue;
+    background: orange;
     color: #fff;
   }
 }

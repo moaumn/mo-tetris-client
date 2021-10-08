@@ -52,6 +52,7 @@ export type Game = {
   pauseGame: () => void;
   continueGame: () => void;
   endGame: () => void;
+  removeTicker?: () => void;
 
   // 游戏控制
   rotateBox: () => void;
@@ -107,7 +108,7 @@ export function createGame(options: any) {
         // 被动模式不自动下落和创建box
         if (!game.passive) {
           createBox(game);
-          addTicker((n: number) => {
+          game.removeTicker = addTicker((n: number) => {
             if (game.state === GameState.started) {
               if (game.interval(n)) {
                 game.dispatch("ticker");
@@ -120,7 +121,7 @@ export function createGame(options: any) {
       }
     },
     endGame() {
-      game.state = GameState.unStarted;
+      endGame(game);
     },
     pauseGame() {
       game.state = GameState.paused;
@@ -243,8 +244,7 @@ export function moveDown(game: Game, recursive = false) {
     rewardProp(rows, game);
     // 检查游戏结束
     if (checkGameOver(game.map)) {
-      game.state = GameState.unStarted;
-      game.dispatch("end");
+      endGame(game);
       return;
     }
     // 主动模式，自动创建下一个box
@@ -291,4 +291,10 @@ export function rewardProp(rows: number, game: Game) {
       game.props.value.push(props[propIndex]);
     }
   }
+}
+
+export function endGame(game: Game) {
+  game.removeTicker!();
+  game.state = GameState.unStarted;
+  game.dispatch("end");
 }

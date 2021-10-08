@@ -4,6 +4,10 @@ let startTime = Date.now();
 let tickerStarted = false;
 export function addTicker(ticker: Ticker) {
   tickers.push(ticker);
+  return () => {
+    const index = tickers.indexOf(ticker);
+    tickers.splice(index, 1);
+  };
 }
 
 export function startTicker() {

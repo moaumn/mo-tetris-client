@@ -30,39 +30,30 @@ export function addBoxToMap(map: number[][], box: Box) {
   }
 }
 
-function _removeFilledRow(map: number[][], rowIndex: number) {
-  if (
-    map[rowIndex] &&
-    map[rowIndex].every((item) => item === MapState.FILLED)
-  ) {
-    const newRow = Array(map[rowIndex].length).fill(MapState.EMPTY);
-    map.splice(rowIndex, 1);
-    map.unshift(newRow);
-    return true;
+function _removeFilledRow(map: number[][], start: number, end: number) {
+  const filledRows = [];
+  const colLength = map[0].length;
+  for (let i = end; i >= start; i--) {
+    if (map[i] && map[i].every((item) => item === MapState.FILLED)) {
+      filledRows.push(i);
+    }
   }
-  return false;
+  filledRows.forEach((item) => map.splice(item, 1));
+  for (let i = 0; i < filledRows.length; i++) {
+    const newRow = Array(colLength).fill(MapState.EMPTY);
+    map.unshift(newRow);
+  }
+  return filledRows.length;
 }
 
 export function removeFilledRow(map: number[][], box: Box): number;
 export function removeFilledRow(map: number[][], rowNum: number): number;
 export function removeFilledRow(map: number[][], param: unknown) {
-  let removeRows = 0;
   if (typeof param === "number") {
-    for (let i = 0; i < param; i++) {
-      if (_removeFilledRow(map, map.length - i)) {
-        removeRows++;
-      }
-    }
-  } else {
-    const box = param as Box;
-    for (let i = 0; i < box.shape.length; i++) {
-      const rowIndex = box.y + i;
-      if (_removeFilledRow(map, rowIndex)) {
-        removeRows++;
-      }
-    }
+    return _removeFilledRow(map, map.length - param, map.length - 1);
+  } else if (param instanceof Box) {
+    return _removeFilledRow(map, param.y, param.y + param.shape.length - 1);
   }
-  return removeRows;
 }
 
 export function checkGameOver(map: number[][]) {
