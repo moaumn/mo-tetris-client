@@ -46,7 +46,16 @@ const roomId = inject("roomId") as Ref<string>;
 const invite = () => {
   const url = new URL(location.href);
   url.searchParams.set("roomId", roomId.value);
-  navigator.clipboard.writeText(url.href);
+  try {
+    navigator.clipboard.writeText(url.href);
+  } catch (e) {
+    const oInput = document.createElement("input");
+    oInput.value = url.href;
+    document.body.appendChild(oInput);
+    oInput.select();
+    document.execCommand("Copy");
+    oInput.remove();
+  }
   information("邀请链接复制成功，发送给好友即可开始对战");
 };
 
