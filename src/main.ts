@@ -34,10 +34,8 @@ initMessage(
 );
 
 const html = document.querySelector("html");
-//const app = document.querySelector("#app");
 function rotateWindow() {
   let { clientWidth: width, clientHeight: height } = document.body;
-
   if (width < height) {
     html!.style.transform = `rotateZ(90deg) translate(${
       (height - width) / 2

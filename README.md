@@ -1,11 +1,16 @@
-# Vue 3 + Typescript + Vite
+## 双人联机对战俄罗斯方块
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+游戏支持单人和双人模式，单人模式无需联网，双人模式通过链接邀请加入游戏。
 
-## Recommended IDE Setup
+### 游戏道具说明
+通过消除行来获取游戏道具，一次消除行数越多，获得道具几率越高。
+道具分为增益和减益两种，增益道具对自己生效，减益道具对对手生效。
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+#### 增益道具：
+1. 绿色小方格图标：从最底层开始填充3个空格。
+2. 绿色长条图标：将下一个方块替换为长条。
+3. 绿色表图标：当前和后面两个方块下落速度减半。
 
-## Type Support For `.vue` Imports in TS
-
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+#### 减益道具：
+1. 红色旋转图标：对手下一个方块无法旋转。
+2. 红色表图标：当前和后面两个方块下落速度加倍。
