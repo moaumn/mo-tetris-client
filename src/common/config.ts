@@ -1,8 +1,10 @@
 export default {
+  // 行数
   row: 20,
+  // 列数
   col: 12,
+  // 下落间隔
   interval: 1000,
-  //serverUrl: "http://localhost:4567/",
-  //serverUrl: "http://192.168.4.24:4567/",
-  serverUrl: "http://103.216.154.42:4567/",
+  // 服务端地址
+  serverUrl: "http://localhost:4567/",
 };
