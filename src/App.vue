@@ -6,6 +6,7 @@ import config from "./common/config";
 import { MySelf, PlayerState, Rival } from "./common/player";
 import { inject, ref, watch, Ref } from "vue";
 import { information } from "./common/utils";
+import { playEffect } from "./common/special-effect";
 
 const game = createGame(Object.assign({ passive: false }, config));
 const rivalGame = createGame(Object.assign({ passive: true }, config));

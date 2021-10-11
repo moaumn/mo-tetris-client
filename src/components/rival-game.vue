@@ -19,7 +19,7 @@ const { onlineState } = props.rival;
       <slot name="prop"></slot>
       <slot name="bottom"></slot>
     </div>
-    <Map :map="map"></Map>
+    <Map :map="map" :game="props.game" :rival="true"></Map>
   </div>
 </template>
 

@@ -1,6 +1,6 @@
 import { Observer } from "../common/observer";
 import { hitBottomBoundary, hitLeftBoundary, hitRightBoundary } from "./hit";
-import { addTicker, startTicker } from "./ticker";
+import { addTicker } from "./ticker";
 import { Box, createRandomBox } from "./box";
 import { reactive, ref, Ref } from "vue";
 import {
@@ -116,7 +116,6 @@ export function createGame(options: any) {
               }
             }
           });
-          startTicker();
         }
       }
     },
@@ -234,6 +233,9 @@ export function moveDown(game: Game, recursive = false) {
       moveDown(game, true);
     }
   } else {
+    if (recursive) {
+      game.dispatch("fallDown", game.activeBox);
+    }
     // box上屏
     addBoxToMap(game.map, game.activeBox!);
     // 删除满行
