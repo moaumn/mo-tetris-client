@@ -59,7 +59,7 @@ class Emitter {
   last_update: number;
   last_emission: number;
   particles: Particle[];
-  ctx: any;
+  ctx: CanvasRenderingContext2D;
   startTime = Date.now();
 
   constructor(ctx: any, x: number, y: number, settings: any) {
@@ -212,8 +212,10 @@ class Emitter {
       let y = this.pos.y + particle.pos.y;
 
       this.ctx.beginPath();
-      // this.ctx.arc(x, y, particle.size, 0, Math.PI * 2);
-      this.ctx.rect(x, y, particle.size / 4, particle.size);
+      this.ctx.moveTo(x + particle.size / 2, y);
+      this.ctx.lineTo(x + particle.size / 3, y + particle.size);
+      this.ctx.lineTo(x + (particle.size / 3) * 2, y + particle.size);
+      this.ctx.closePath();
       this.ctx.fill();
     }
   }
@@ -226,21 +228,21 @@ const settings = {
     life_range: 2,
     min_angle: 0,
     angle_range: 180,
-    min_speed: 100,
+    min_speed: 80,
     speed_range: 50,
-    min_size: 2,
+    min_size: 4,
     size_range: 4,
     start_colours: [
       [246, 208, 92, 1],
       [214, 97, 44, 1],
     ],
     end_colours: [
-      [246, 208, 92, 1],
-      [214, 97, 44, 1],
+      [246, 208, 92, 0],
+      [214, 97, 44, 0],
     ],
     gravity: {
       x: 0,
-      y: 100,
+      y: 80,
     },
     duration: 200,
   },
