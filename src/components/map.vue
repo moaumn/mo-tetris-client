@@ -3,7 +3,7 @@ import { Game, MapState, Box } from "../game";
 import ice from "../assets/ice.png";
 import fire from "../assets/fire.png";
 import { playEffect } from "../common/special-effect";
-import { onMounted, onUnmounted, ref } from "vue";
+import { onMounted, onUnmounted, ref, inject, Ref } from "vue";
 
 const props = withDefaults(
   defineProps<{
@@ -32,6 +32,7 @@ const getBackground = (mapState: MapState) => {
   }
 };
 
+const remBase = inject("remBase") as Ref<number>;
 // 播放掉落特效
 const mapElement = ref();
 if (props.game) {
@@ -60,6 +61,7 @@ if (props.game) {
       (box.y + bottomY) * boxSize + mapElement.value.offsetTop - 30,
       100,
       100,
+      remBase.value,
       props.rival
     );
   });

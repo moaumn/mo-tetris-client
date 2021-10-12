@@ -221,38 +221,12 @@ class Emitter {
   }
 }
 
-const settings = {
-  basic: {
-    emission_rate: 300,
-    min_life: 2,
-    life_range: 2,
-    min_angle: 0,
-    angle_range: 180,
-    min_speed: 80,
-    speed_range: 50,
-    min_size: 4,
-    size_range: 4,
-    start_colours: [
-      [246, 208, 92, 1],
-      [214, 97, 44, 1],
-    ],
-    end_colours: [
-      [246, 208, 92, 0],
-      [214, 97, 44, 0],
-    ],
-    gravity: {
-      x: 0,
-      y: 80,
-    },
-    duration: 200,
-  },
-};
-
 export function playEffect(
   x: number,
   y: number,
   width: number,
   height: number,
+  remBase: number,
   rival = false
 ) {
   const canvas = document.createElement("canvas");
@@ -264,6 +238,34 @@ export function playEffect(
   document.body.append(canvas);
 
   const ctx = canvas.getContext("2d");
+  debugger;
+  const settings = {
+    basic: {
+      emission_rate: 300,
+      min_life: 2,
+      life_range: 2,
+      min_angle: 0,
+      angle_range: 180,
+      min_speed: 80,
+      speed_range: 50,
+      min_size: 0.04 * remBase,
+      size_range: 0.04 * remBase,
+      start_colours: [
+        [246, 208, 92, 1],
+        [214, 97, 44, 1],
+      ],
+      end_colours: [
+        [246, 208, 92, 0],
+        [214, 97, 44, 0],
+      ],
+      gravity: {
+        x: 0,
+        y: 0.8 * remBase,
+      },
+      duration: 200,
+    },
+  };
+
   let emitter = new Emitter(
     ctx,
     canvas.width / 2,
@@ -281,11 +283,11 @@ export function playEffect(
         })
       : settings.basic
   );
+
   const ticker = () => {
     ctx!.clearRect(0, 0, canvas.width, canvas.height);
     emitter.update();
   };
-
   const removeTicker = addTicker(ticker);
   setTimeout(() => {
     removeTicker();

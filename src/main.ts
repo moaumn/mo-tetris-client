@@ -7,6 +7,7 @@ import { guid, information } from "./common/utils";
 const connectState = ref(false);
 const enterRoomState = ref(false);
 const roomId = ref("");
+const remBase = ref(0);
 
 const url = new URL(location.href);
 const urlRoomId = url.searchParams.get("roomId");
@@ -48,17 +49,19 @@ initMessage(
 
 const html = document.querySelector("html");
 function rotateWindow() {
-  let { clientWidth: width, clientHeight: height } = document.body;
+  const width = window.innerWidth;
+  const height = window.innerHeight;
   if (width < height) {
-    html!.style.transform = `rotateZ(90deg) translate(${
-      (height - width) / 2
-    }px, ${(height - width) / 2}px)`;
-    html!.style.fontSize = (height / 736) * 100 + "px";
+    const offset = (height - width) / 2;
+    remBase.value = (height / 736) * 100;
+    html!.style.transform = `rotateZ(90deg) translate(${offset}px, ${offset}px)`;
+    html!.style.fontSize = remBase.value + "px";
     html!.style.width = height + "px";
     html!.style.height = width + "px";
   } else {
+    remBase.value = (width / 736) * 100;
     html!.style.transform = "none";
-    html!.style.fontSize = (width / 736) * 100 + "px";
+    html!.style.fontSize = remBase.value + "px";
     html!.style.width = "100%";
     html!.style.height = "100%";
   }
@@ -70,4 +73,5 @@ const app = createApp(App);
 app.provide("connectState", connectState);
 app.provide("enterRoomState", enterRoomState);
 app.provide("roomId", roomId);
+app.provide("remBase", remBase);
 app.mount("#app");
