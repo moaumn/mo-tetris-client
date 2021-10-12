@@ -1,27 +1,38 @@
 <script setup lang="ts">
 import Game from "./components/game.vue";
 import RivalGame from "./components/rival-game.vue";
-import { createGame, GameMode, PropType, deBuffProps } from "./game";
+import { createGame, deBuffProps, GameMode, PropType } from "./game";
 import config from "./common/config";
 import { MySelf, PlayerState, Rival } from "./common/player";
-import { inject, ref, watch, Ref } from "vue";
+import { inject, ref, Ref, watch } from "vue";
 import { information } from "./common/utils";
-import { playEffect } from "./common/special-effect";
 
 const game = createGame(Object.assign({ passive: false }, config));
 const rivalGame = createGame(Object.assign({ passive: true }, config));
-
+const computeScore = (score: number, rivalScore: number) => {
+  if (score >= rivalScore) {
+    alert("You Win");
+  } else {
+    alert("You Lose");
+  }
+};
 const player = new MySelf(game, () => {
   if (game.mode === GameMode.multiple) {
-    rival.endGame();
-    if (game.score.value >= rivalGame.score.value) {
-      alert("You Win");
+    if (rival.state.value === PlayerState.ended) {
+      computeScore(game.score.value, rivalGame.score.value);
     } else {
-      alert("You Lose");
+      information("游戏结束，等待对手游戏结束后计算分数");
     }
+  } else {
+    information("游戏结束");
   }
 });
-const rival = new Rival(rivalGame);
+const rival = new Rival(rivalGame, () => {
+  information("对手游戏已结束");
+  if (player.state.value === PlayerState.ended) {
+    computeScore(game.score.value, rivalGame.score.value);
+  }
+});
 
 const { state: rivalState, onlineState: rivalOnlineState } = rival;
 const { state } = player;
@@ -37,8 +48,12 @@ watch(connectState, (value) => {
 
 const gameMode = ref(GameMode.single);
 const onGameModeChange = (mode: GameMode) => {
-  if (state.value === PlayerState.started) {
-    return information("游戏运行中不可以切换模式");
+  if (
+    state.value === PlayerState.started ||
+    state.value === PlayerState.readied ||
+    rivalState.value === PlayerState.started
+  ) {
+    return information("游戏运行或准备中不可以切换模式");
   }
   gameMode.value = mode;
 };
@@ -143,7 +158,10 @@ const releaseProp = (propType: PropType, index: number) => {
           >
             <button v-if="!rivalOnlineState" @click="invite">邀请</button>
             <button
-              v-if="rivalState === PlayerState.readied"
+              v-if="
+                rivalState === PlayerState.readied &&
+                state !== PlayerState.started
+              "
               @click="
                 player.start(GameMode.multiple);
                 rival.start(GameMode.multiple);
@@ -154,9 +172,18 @@ const releaseProp = (propType: PropType, index: number) => {
             <button
               v-if="
                 state !== PlayerState.started &&
+                rivalState !== PlayerState.started &&
                 rivalState !== PlayerState.readied
               "
-              @click="player.ready"
+              @click="
+                () => {
+                  if (state === PlayerState.readied) {
+                    player.cancelReady();
+                  } else {
+                    player.ready();
+                  }
+                }
+              "
             >
               {{ state === PlayerState.readied ? "已" : "" }}准备
             </button>

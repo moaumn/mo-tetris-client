@@ -8,8 +8,21 @@ const connectState = ref(false);
 const enterRoomState = ref(false);
 const roomId = ref("");
 
-const { searchParams } = new URL(location.href);
-roomId.value = searchParams.get("roomId") || guid();
+const url = new URL(location.href);
+const urlRoomId = url.searchParams.get("roomId");
+const storageRoomId = localStorage.getItem("roomId");
+if (urlRoomId) {
+  roomId.value = urlRoomId;
+} else {
+  if (storageRoomId) {
+    roomId.value = storageRoomId;
+  } else {
+    roomId.value = guid();
+    localStorage.setItem("roomId", roomId.value);
+  }
+  url.searchParams.set("roomId", roomId.value);
+  history.replaceState(null, "", url);
+}
 
 function enterRoom() {
   message.emit("enterRoom", roomId.value);

@@ -1,4 +1,4 @@
-import { buffProps, Game, GameMode, PropType } from "../game";
+import { buffProps, Game, GameMode, GameState, PropType } from "../game";
 import { message } from "./message";
 import { Ref, ref } from "vue";
 import { information } from "./utils";
@@ -19,6 +19,9 @@ export class Player {
   }
   ready() {
     this.state.value = PlayerState.readied;
+  }
+  cancelReady() {
+    this.state.value = PlayerState.unStarted;
   }
   start(mode: GameMode) {
     this.state.value = PlayerState.started;
@@ -66,7 +69,6 @@ export class MySelf extends Player {
       this.emit("rivalGame", "createBox", ...args);
     });
     this.game.on("end", () => {
-      this.emit("game", "end", this.game.score);
       this.emit("rivalGame", "end");
       this.state.value = PlayerState.ended;
       onEnd();
@@ -78,27 +80,31 @@ export class MySelf extends Player {
           super.start(GameMode.multiple);
           break;
         case "releaseProp":
-          // @ts-ignore
-          super.releaseProp(...args);
-          break;
-        case "end":
-          this.endGame();
-          onEnd();
+          if (this.game.state === GameState.started) {
+            // @ts-ignore
+            super.releaseProp(...args);
+          }
           break;
       }
     });
   }
 
   start(model: GameMode) {
-    message.emit("game", "start");
-    message.emit("rivalGame", "start");
+    if (model === GameMode.multiple) {
+      message.emit("game", "start");
+      message.emit("rivalGame", "start");
+    }
     super.start(model);
   }
 
   ready() {
-    message.emit("game", "ready");
     message.emit("rivalGame", "ready");
     super.ready();
+  }
+
+  cancelReady() {
+    message.emit("rivalGame", "cancelReady");
+    super.cancelReady();
   }
 
   handleMoveLeft() {
@@ -146,13 +152,14 @@ export class MySelf extends Player {
 export class Rival extends Player {
   onlineState: Ref<boolean> = ref(false);
 
-  constructor(game: Game) {
+  constructor(game: Game, onEnd: () => void) {
     super(game);
     message.on("rivalOnline", () => {
       this.onlineState.value = true;
       information("朋友已上线");
     });
     message.on("rivalOffline", () => {
+      this.game.endGame();
       this.state.value = PlayerState.unStarted;
       this.onlineState.value = false;
       information("朋友已下线");
@@ -187,9 +194,13 @@ export class Rival extends Player {
           break;
         case "end":
           this.endGame();
+          onEnd();
           break;
         case "ready":
           this.ready();
+          break;
+        case "cancelReady":
+          this.cancelReady();
           break;
       }
     });

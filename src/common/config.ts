@@ -6,5 +6,6 @@ export default {
   // 下落间隔
   interval: 1000,
   // 服务端地址
-  serverUrl: "http://localhost:4567/",
+  //serverUrl: "http://localhost:4567/",
+  serverUrl: "http://103.216.154.42:4567/",
 };

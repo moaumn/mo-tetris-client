@@ -296,7 +296,7 @@ export function rewardProp(rows: number, game: Game) {
 }
 
 export function endGame(game: Game) {
-  game.removeTicker!();
+  game.removeTicker?.();
   game.state = GameState.unStarted;
   game.dispatch("end");
 }
