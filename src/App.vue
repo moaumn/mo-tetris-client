@@ -295,7 +295,7 @@ const releaseProp = (propType: PropType, index: number) => {
   gap: 0.1rem;
 
   .game__prop {
-    border: 0.01rem solid #000000;
+    border: 0.02rem solid orange;
     border-radius: 0.05rem;
   }
 

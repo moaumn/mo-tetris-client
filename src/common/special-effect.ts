@@ -235,10 +235,9 @@ export function playEffect(
   canvas.style.position = "absolute";
   canvas.style.left = x + "px";
   canvas.style.top = y + "px";
-  document.body.append(canvas);
+  document.querySelector("#app")!.append(canvas);
 
   const ctx = canvas.getContext("2d");
-  debugger;
   const settings = {
     basic: {
       emission_rate: 300,

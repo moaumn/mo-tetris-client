@@ -62,12 +62,14 @@ function rotateWindow() {
     remBase.value = (width / 736) * 100;
     html!.style.transform = "none";
     html!.style.fontSize = remBase.value + "px";
-    html!.style.width = "100%";
-    html!.style.height = "100%";
+    html!.style.width = width + "px";
+    html!.style.height = height + "px";
   }
 }
 rotateWindow();
-window.addEventListener("resize", rotateWindow);
+window.addEventListener("resize", () => {
+  rotateWindow();
+});
 
 const app = createApp(App);
 app.provide("connectState", connectState);

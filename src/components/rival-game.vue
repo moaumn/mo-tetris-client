@@ -30,6 +30,7 @@ const { onlineState } = props.rival;
   &__score {
     padding: 0.1rem 0;
     text-align: center;
+    color: #fff;
   }
 
   &__side {
