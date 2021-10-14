@@ -47,23 +47,28 @@ initMessage(
   }
 );
 
-const html = document.querySelector("html");
+const html = document.querySelector("html") as HTMLElement;
+const appx = document.querySelector("#app") as HTMLElement;
 function rotateWindow() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
+  let width = window.innerWidth;
+  let height = window.innerHeight;
+  if (width === height) {
+    width = html.offsetWidth;
+    height = html.offsetHeight;
+  }
   if (width < height) {
     const offset = (height - width) / 2;
     remBase.value = (height / 736) * 100;
-    html!.style.transform = `rotateZ(90deg) translate(${offset}px, ${offset}px)`;
     html!.style.fontSize = remBase.value + "px";
-    html!.style.width = height + "px";
-    html!.style.height = width + "px";
+    appx.style.transform = `rotateZ(90deg) translate(${offset}px, ${offset}px)`;
+    appx.style.width = height + "px";
+    appx.style.height = width + "px";
   } else {
     remBase.value = (width / 736) * 100;
-    html!.style.transform = "none";
     html!.style.fontSize = remBase.value + "px";
-    html!.style.width = width + "px";
-    html!.style.height = height + "px";
+    appx.style.transform = "none";
+    appx.style.width = width + "px";
+    appx.style.height = height + "px";
   }
 }
 rotateWindow();
